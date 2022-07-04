@@ -49,6 +49,27 @@ jobs:
           path: |
             ./build*/**/*.so*
             ./build*/**/*.s
+
+  osx:
+    runs-on: macos-12
+    steps:
+      - name: Git checkout
+        uses: actions/checkout@v2
+        with:
+          submodules: 'recursive'
+      - name: Build osx universal
+        run: |
+          mkdir build_osx_universal
+          cd build_osx_universal
+          cmake .. -DCMAKE_BUILD_TYPE:STRING="RelWithDebInfo"
+          cd ..
+          cmake --build build_osx_universal
+      - name: Upload osx artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: osx-artifacts
+          path: |
+            ./build*/**/*.dylib
             
   windows:
     runs-on: windows-2019
