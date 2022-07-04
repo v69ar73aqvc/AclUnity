@@ -70,6 +70,7 @@ jobs:
           name: osx-artifacts
           path: |
             ./build*/**/*.dylib
+            ./build*/**/*.s
             
   windows:
     runs-on: windows-2019
