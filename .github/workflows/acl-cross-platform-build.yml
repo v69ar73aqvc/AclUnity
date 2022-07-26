@@ -64,13 +64,20 @@ jobs:
           cmake .. -DCMAKE_BUILD_TYPE:STRING="RelWithDebInfo" -DCMAKE_OSX_ARCHITECTURES:STRING="arm64"
           cd ..
           cmake --build build_osx_arm
-      - name: Build osx x86
+      - name: Build osx x86 SSE2
         run: |
-          mkdir build_osx_x86
-          cd build_osx_x86
+          mkdir build_osx_x86_sse2
+          cd build_osx_x86_sse2
           cmake .. -DCMAKE_BUILD_TYPE:STRING="RelWithDebInfo" -DCMAKE_OSX_ARCHITECTURES:STRING="x86_64"
           cd ..
-          cmake --build build_osx_x86
+          cmake --build build_osx_x86_sse2
+      - name: Build osx x86 AVX
+        run: |
+          mkdir build_osx_x86_avx
+          cd build_osx_x86_avx
+          cmake .. -DCMAKE_BUILD_TYPE:STRING="RelWithDebInfo" -DCMAKE_OSX_ARCHITECTURES:STRING="x86_64" -DACLUNITY_IS_AVX:BOOL="True"
+          cd ..
+          cmake --build build_osx_x86_avx
       - name: Upload osx artifacts
         uses: actions/upload-artifact@v3
         with:
